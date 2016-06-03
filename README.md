@@ -7,12 +7,12 @@ one key setup scripts
 
 if dir is not exist it will be created
 
-/data                     all data will be store here
+/data                    
 
-/data/server              application default install location
+/data/server            
 
-/data/logs                all logs
+/data/logs  
 
-/data/rpm        all packages
+/data/rpm      
 
-/data/scripts    all scripts
+/data/scripts 
