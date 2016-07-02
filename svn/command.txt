@@ -1,0 +1,7 @@
+svn import ansible file:///data/svn/config/op.hb2.ali.prod.ipusoft.com/ansible -m "import ansible"
+svn import scripts file:///data/svn/config/op.hb2.ali.prod.ipusoft.com/scripts -m "import scripts"
+svn co file:///data/svn/config/op.hb2.ali.prod.ipusoft.com/scripts scripts
+svn co file:///data/svn/config/op.hb2.ali.prod.ipusoft.com/ansible ansible
+cp post-commit pre-commit /data/svn/config/hooks/ 
+cd /data/svn/config/hooks/
+chmod +x post-commit pre-commit
