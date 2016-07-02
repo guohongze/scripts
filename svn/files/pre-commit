@@ -1,0 +1,12 @@
+#!/bin/sh
+#!/bin/sh
+REPOS="$1"
+TXN="$2"
+SVNLOOK=/usr/bin/svnlook
+# check that logmessage contains at least 10 alphanumeric characters
+LOGMSG=`$SVNLOOK log -t "$TXN" "$REPOS" | tr -d ' ' | wc -c`
+if [ "$LOGMSG" -lt 8 ];
+then
+  echo -e "\n至少输入7个注释字符!" 1>&2
+  exit 1
+fi

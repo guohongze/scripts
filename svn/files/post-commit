@@ -1,0 +1,15 @@
+#!/bin/sh
+
+REPOS="$1"
+REV="$2"
+
+export LANG=zh_CN.UTF-8 
+PRODIR=$PRODIR/
+SVN=$PRODIR/svn
+WEB=/data/www/website_v2
+LOG=/data/svn/auto_svn.log
+SVNLOOK=$PRODIR/svnlook
+#update the code from the SVN
+sleep 1
+$SVN update $WEB
+
