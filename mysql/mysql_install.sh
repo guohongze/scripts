@@ -14,10 +14,13 @@ echo "============================="
 [ ! -d /data/logs ] && mkdir -p /data/logs
 cd /data/server
 read -p "please type mysql version[default:5.6.29]:" mysqlv
-[ -n $mysqlv ] && mysqlv=5.6.29
+if [ -z $mysqlv ] 
+then
+	mysqlv=5.6.29
+fi
 if [ -f /data/rpm/mysql-$mysqlv-linux-glibc2.5-x86_64.tar.gz ]
 then
-	cp /data/rpm/mysql-$mysqlv-linux-glibc2.5-x86_64.tar.gz /data/server
+	scp /data/rpm/mysql-$mysqlv-linux-glibc2.5-x86_64.tar.gz /data/server
 else
 	ls /data/server|grep "mysql-$mysqlv-linux-glibc2.5"|xargs rm -rf
 	wget  http://downloads.mysql.com/archives/get/file/mysql-$mysqlv-linux-glibc2.5-x86_64.tar.gz
@@ -37,13 +40,13 @@ grep "mysql" /etc/group || groupadd mysql
 grep "mysql" /etc/passwd || useradd -r -g mysql mysql -s /sbin/nologin
 chown -R mysql:mysql .
 $MYSQLDIR/scripts/mysql_install_db --user=mysql --basedir=$MYSQLDIR --datadir=$MYSQLDIR/data
-cp support-files/mysql.server /etc/init.d/mysqld
+scp support-files/mysql.server /etc/init.d/mysqld
 ln -s $MYSQLDIR /usr/local/mysql
-[ -f /etc/my.cnf ] && cp -f /etc/my.cnf my.cnf.$(date).bak
-echo "backup /etc/my.cnf my.cnf.$(date).bak"
+[ -f /etc/my.cnf ] && scp -f /etc/my.cnf my.cnf.bak
+echo "backup /etc/my.cnf my.cnf.$(date +%y%m%d).bak"
 rm -rf /etc/my.cnf
 rm -rf $MYSQLDIR/my.cnf
-cp /data/scripts/mysql/my.cnf $MYSQLDIR
+scp /data/scripts/mysql/my.cnf $MYSQLDIR
 ln -s $MYSQLDIR/my.cnf /etc/my.cnf
 [ ! -d /data/logs/mysql ] && mkdir -p /data/logs/mysql
 chown -R mysql.mysql /data/logs/mysql
