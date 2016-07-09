@@ -1,11 +1,29 @@
 #!/bin/bash
 # mysql install
-set -e
+#set -e
 MYSQLDIR=/data/server/mysql
+
 if [ -d $MYSQLDIR/bin ]
 then
 	echo "your linux has installed mysql!"
-	exit 0
+	read -p "uninstall mysql and beginning a new install?[y,n]" confirm
+	case $confirm in
+	yes|y|Y|Yes|YES) 
+		echo "beginning clean install..."
+		service mysqld stop
+		rm -rf $MYSQLDIR
+		rm -rf /usr/local/mysql
+		rm -rf /etc/my.cnf
+		rm -rf /data/logs/mysql
+		rm -rf /etc/init.d/mysqld                     
+		;;
+	no|n|N|NO|No) 
+		exit 1                    
+		;;
+	*) 
+		exit 1                    
+		;;
+	esac
 fi
 echo "============================="
 echo "====mysql install script====="
@@ -42,7 +60,7 @@ chown -R mysql:mysql .
 $MYSQLDIR/scripts/mysql_install_db --user=mysql --basedir=$MYSQLDIR --datadir=$MYSQLDIR/data
 scp support-files/mysql.server /etc/init.d/mysqld
 ln -s $MYSQLDIR /usr/local/mysql
-[ -f /etc/my.cnf ] && scp -f /etc/my.cnf my.cnf.bak
+[ -f /etc/my.cnf ] && scp /etc/my.cnf my.cnf.$(date +%y%m%d).bak
 echo "backup /etc/my.cnf my.cnf.$(date +%y%m%d).bak"
 rm -rf /etc/my.cnf
 rm -rf $MYSQLDIR/my.cnf
@@ -52,8 +70,8 @@ ln -s $MYSQLDIR/my.cnf /etc/my.cnf
 chown -R mysql.mysql /data/logs/mysql
 grep "$MYSQLDIR/bin" /etc/bashrc || echo "export PATH=$MYSQLDIR/bin:\$PATH" >> /etc/bashrc
 source /etc/bashrc
-[ -f $MYSQLDIR-$mysqlv-linux-glibc2.5-x86_64.tar.gz ] && mv $MYSQLDIR-$mysqlv-linux-glibc2.5-x86_64.tar.gz /data/rpm/.
+[ -f /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz ] && [ ! -f /data/rpm/$mysqlv-linux-glibc2.5-x86_64.tar.gz ] && mv /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz /data/rpm/.
 chkconfig mysqld on
+rm -rf /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz
 echo "please exec service mysqld start"
 echo "mysql install successfull!!"
-
