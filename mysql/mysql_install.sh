@@ -60,6 +60,7 @@ chown -R mysql:mysql .
 $MYSQLDIR/scripts/mysql_install_db --user=mysql --basedir=$MYSQLDIR --datadir=$MYSQLDIR/data
 scp support-files/mysql.server /etc/init.d/mysqld
 ln -s $MYSQLDIR /usr/local/mysql
+source /etc/profile
 [ -f /etc/my.cnf ] && scp /etc/my.cnf my.cnf.$(date +%y%m%d).bak
 echo "backup /etc/my.cnf my.cnf.$(date +%y%m%d).bak"
 rm -rf /etc/my.cnf
@@ -73,5 +74,6 @@ source /etc/bashrc
 [ -f /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz ] && [ ! -f /data/rpm/$mysqlv-linux-glibc2.5-x86_64.tar.gz ] && mv /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz /data/rpm/.
 chkconfig mysqld on
 rm -rf /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz
-echo "please exec service mysqld start"
+echo "service mysqld start"
+service mysqld start
 echo "mysql install successfull!!"
