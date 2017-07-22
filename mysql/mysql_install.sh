@@ -71,9 +71,9 @@ ln -s $MYSQLDIR/my.cnf /etc/my.cnf
 chown -R mysql.mysql /data/logs/mysql
 grep "$MYSQLDIR/bin" /etc/bashrc || echo "export PATH=$MYSQLDIR/bin:\$PATH" >> /etc/bashrc
 source /etc/bashrc
-[ -f /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz ] && [ ! -f /data/rpm/$mysqlv-linux-glibc2.5-x86_64.tar.gz ] && mv /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz /data/rpm/.
+[ -f /data/server/mysql-$mysqlv-linux-glibc2.5-x86_64.tar.gz ] && [ ! -f /data/rpm/mysql-$mysqlv-linux-glibc2.5-x86_64.tar.gz ] && mv /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz /data/rpm/.
 chkconfig mysqld on
-rm -rf /data/server/$mysqlv-linux-glibc2.5-x86_64.tar.gz
+rm -rf /data/server/mysql-$mysqlv-linux-glibc2.5-x86_64.tar.gz
 echo "service mysqld start"
 service mysqld start
 echo "mysql install successfull!!"

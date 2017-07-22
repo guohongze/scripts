@@ -40,6 +40,8 @@ tar zxvf php-$phpversion.tar.gz
 cd /data/src/php-$phpversion
 yum install -y gmp-devel \
 readline-devel \
+gcc \
+gcc-c++ \
 libicu-devel libicu \
 ncurses ncurses-devel \
 pcre pcre-devel \

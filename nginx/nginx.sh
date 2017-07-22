@@ -30,3 +30,8 @@ chmod +x /etc/init.d/nginx
 chkconfig --add nginx
 chkconfig nginx on
 rm -rf /data/rpm/nginx-1.8.1
+mkdir -p /data/www
+scp /data/scripts/files/index.php /data/www
+scp /data/scripts/files/www.conf /data/server/nginx/conf/vhost
+service nginx restart
+echo "nginx installed successfully!"
